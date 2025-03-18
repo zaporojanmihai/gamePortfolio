@@ -1,0 +1,339 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Poppins', sans-serif;
+    background-color: #000;
+    color: white;
+    overflow: hidden;
+    height: 100vh;
+    width: 100vw;
+}
+
+.game-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+canvas {
+    display: block;
+    width: 100%;
+    height: 100%;
+    outline: none;
+}
+
+.loading-screen {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    transition: opacity 0.5s ease;
+}
+
+.loading-content {
+    text-align: center;
+    width: 80%;
+    max-width: 500px;
+}
+
+.loading-content h1 {
+    font-size: 2rem;
+    margin-bottom: 20px;
+    color: #fff;
+}
+
+.progress-bar-container {
+    width: 100%;
+    height: 8px;
+    background-color: #222;
+    border-radius: 4px;
+    overflow: hidden;
+}
+
+.progress-bar {
+    height: 100%;
+    width: 0%;
+    background-color: #0f0;
+    transition: width 0.3s ease;
+}
+
+.intro-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.85);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 900;
+    opacity: 1;
+    transition: opacity 0.5s ease;
+}
+
+.intro-content {
+    text-align: center;
+    max-width: 600px;
+    padding: 20px;
+}
+
+.intro-content h1 {
+    font-size: 3rem;
+    margin-bottom: 15px;
+    color: #fff;
+}
+
+.intro-content p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    color: #ccc;
+}
+
+#start-button {
+    background-color: #0f0;
+    color: #000;
+    border: none;
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    border-radius: 30px;
+    cursor: pointer;
+    margin-bottom: 30px;
+    transition: all 0.2s ease;
+    font-weight: bold;
+}
+
+#start-button:hover {
+    background-color: #0c0;
+    transform: scale(1.05);
+}
+
+.controls-info {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+.control-key {
+    width: 50px;
+    height: 50px;
+    background-color: #222;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 8px;
+    font-size: 1.5rem;
+    border: 1px solid #444;
+}
+
+.info-panel {
+    position: fixed;
+    bottom: 30px;
+    right: 30px;
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 10px;
+    padding: 20px;
+    max-width: 400px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+    border: 1px solid rgba(0, 255, 0, 0.2);
+    z-index: 800;
+    transition: all 0.3s ease;
+    transform: translateY(0);
+}
+
+.info-panel.hidden {
+    transform: translateY(150%);
+}
+
+.info-panel h2 {
+    font-size: 1.8rem;
+    margin-bottom: 10px;
+    color: #0f0;
+}
+
+.info-panel p {
+    font-size: 1rem;
+    line-height: 1.5;
+    color: #eee;
+}
+
+.info-panel a {
+    color: white;
+    text-decoration: underline;
+    font-weight: 500;
+    transition: opacity 0.2s ease;
+}
+
+.info-panel a:hover {
+    opacity: 0.8;
+}
+
+.close-button {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: #0f0;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.mobile-controls {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    display: grid;
+    grid-template-columns: repeat(3, 60px);
+    grid-template-rows: repeat(3, 60px);
+    gap: 5px;
+    z-index: 800;
+}
+
+.mobile-controls button {
+    background-color: rgba(0, 0, 0, 0.6);
+    border: 1px solid rgba(0, 255, 0, 0.3);
+    color: #0f0;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    cursor: pointer;
+    outline: none;
+}
+
+.mobile-controls button:active {
+    background-color: rgba(0, 255, 0, 0.2);
+}
+
+#forward-button {
+    grid-column: 2;
+    grid-row: 1;
+}
+
+#left-button {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+#backward-button {
+    grid-column: 2;
+    grid-row: 3;
+}
+
+#right-button {
+    grid-column: 3;
+    grid-row: 2;
+}
+
+.hidden {
+    display: none;
+}
+
+@media screen and (max-width: 768px) {
+    .intro-content h1 {
+        font-size: 2rem;
+    }
+    
+    .intro-content p {
+        font-size: 1rem;
+    }
+    
+    #start-button {
+        padding: 12px 24px;
+        font-size: 1rem;
+    }
+    
+    .info-panel {
+        max-width: 300px;
+        bottom: 20px;
+        right: 20px;
+    }
+    
+    .mobile-controls {
+        display: grid;
+    }
+}
+
+.footer {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.7);
+    padding: 8px 20px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    z-index: 100;
+    backdrop-filter: blur(5px);
+    height: 40px;
+    pointer-events: auto;
+    transition: background-color 0.3s ease;
+    opacity: 1 !important; 
+}
+
+.footer:hover {
+    background-color: rgba(0, 0, 0, 0.9);
+}
+
+.game-active .footer {
+    opacity: 1 !important; 
+    transform: translateY(0) !important; 
+}
+
+.social-links {
+    display: flex;
+    gap: 15px;
+}
+
+.social-link {
+    color: white;
+    transition: color 0.3s ease, transform 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.social-link:hover {
+    color: #64ffda;
+    transform: translateY(-3px);
+}
+
+.social-icon {
+    width: 20px;
+    height: 20px;
+}
+
+.copyright {
+    font-size: 0.8rem;
+    color: rgba(255, 255, 255, 0.7);
+}
+
+@media screen and (max-width: 768px) {
+    .footer {
+        flex-direction: column;
+        gap: 10px;
+        padding: 10px;
+    }
+    
+    .copyright {
+        font-size: 0.7rem;
+    }
+    
+    .social-icon {
+        width: 18px;
+        height: 18px;
+    }
+} 
